@@ -15,10 +15,6 @@ spec:
         app: {{ .Values.name }}
         release: {{ .Release.Name }}
     spec:
-      { { - with .Values.nodeSelector } }
-      nodeSelector:
-        { { - toYaml . | nindent 8 } }
-      { { - end } }
       containers:
         - name: {{ .Values.name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -91,6 +87,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 3000
+      { { - if .Values.nodeSelector } }
+      nodeSelector:
+        { { - range $key, $value := .Values.nodeSelector } }
+          { { $key } }: { { tpl $value $ | quote } }
+      { { - end } }
+      { { - end } }
 ---
 
 apiVersion: v1
