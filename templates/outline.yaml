@@ -15,7 +15,7 @@ spec:
         app: {{ .Values.name }}
         release: {{ .Release.Name }}
     spec:
-      {{- if .Values.nodeSelector } }
+      {{- if .Values.nodeSelector }}
       nodeSelector:
         {{- range $key, $value := .Values.nodeSelector }}
         {{ $key }}: {{ tpl $value $ | quote }}
