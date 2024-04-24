@@ -87,12 +87,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 3000
-      { { - if .Values.nodeSelector } }
+      {{- if .Values.nodeSelector } }
       nodeSelector:
-        { { - range $key, $value := .Values.nodeSelector } }
-          { { $key } }: { { tpl $value $ | quote } }
-      { { - end } }
-      { { - end } }
+        {{- range $key, $value := .Values.nodeSelector }}
+          {{ $key }}: {{ tpl $value $ | quote }}
+      {{ - end }}
+      {{ - end }}
 ---
 
 apiVersion: v1
