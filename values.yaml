@@ -18,6 +18,8 @@ ingress:
   tls:
     enabled: false
 
+nodeSelector: {}
+
 redis:
   enabled: true
   architecture: "standalone"
